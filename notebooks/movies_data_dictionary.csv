@@ -1,0 +1,22 @@
+column_name,data_type,description,source,transformation_or_derivation,notes_or_concerns
+movieId,int64,unique identifier for each movie.,movies_metadata.csv,No change; used as the primary key for each movie per row,should be unique and non-missing
+title,str,The title of each movie.,movies_metadata.csv,No change,used to identify movies
+original_language,str,The original language of each movie.,movies_metadata.csv,No change,"stored as short language codes, ex: en or fr"
+release_year,int32,The release year of each movie.,movies_metadata.csv,No change,useful to analyze ratings over time
+runtime,float64,The runtime of each movie in minutes.,movies_metadata.csv,changed zero values to missing,20 movies had zero runtime
+budget,float64,The budget of each movie in US dollars.,movies_metadata.csv,changed zero values to missing,some movies had zero budget and treated as unreported
+revenue,float64,The revenue of each movie in US dollars.,movies_metadata.csv,changed zero values to missing,some movies had zero revenue and treated as unreported
+popularity,float64,The popularity score of each movie.,movies_metadata.csv,No change,higher values indicate more popular movies
+genres_list,str,The list of genres for each movie.,movies_metadata.csv,No change,missing for 35 movies
+primary_genre,str,The primary genre of each movie.,movies_metadata.csv,No change,"missing for 35 movies, represents only one genre when a movie may have several"
+production_companies,str,The production companies for each movie.,movies_metadata.csv,No change,stored as a list of company names
+production_countries,str,The production countries for each movie.,movies_metadata.csv,No change,stored as a list of country names
+adult,bool,Whether the movie is adult content.,movies_metadata.csv,No change,stored as a boolean value
+director,str,The director of each movie.,credits_curated.csv,joined to movies using tmdbId,missing for some movies
+top_cast,str,The top cast members for each movie.,credits_curated.csv,joined to movies using tmdbId,"missing for some movies, multiple cast members stored together as text"
+keywords_list,str,The list of keywords for each movie.,keywords_curated.csv,joined to movies using tmdbId,missing for some movies
+user_rating_mean,float64,The mean user rating for each movie.,ratings.csv,mean rating grouped by movieId,missing when movie has no ratings
+user_rating_count,float64,The number of user ratings for each movie.,ratings.csv,count of ratings grouped by movieId,missing when movie has no ratings
+user_rating_std,float64,The standard deviation of user ratings for each movie.,ratings.csv,standard deviation of ratings grouped by movieId,missing when movie has fewer than 2 ratings
+rating_target_eligible,bool,Whether the movie is eligible for a rating target.,ratings.csv,True when user_rating_count is at least 20,20 rating cutoff is the project's chosen minimum
+high_user_rating,Int64,Whether the movie has a high user rating.,ratings.csv,True when user_rating_mean is at least 3.75,undefined when movie has less than 20 ratings
